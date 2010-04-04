@@ -29,7 +29,7 @@ void loop(){
 
   bull1.move();
   bull2.move();
-  delay(50);
+  delay(25);
   //bull2.move();
   //bull3.move();
   /*bull1.setPosition(180);

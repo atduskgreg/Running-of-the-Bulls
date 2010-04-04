@@ -11,6 +11,8 @@ Bull::Bull(int pin){
     int ar[] = {-1,1};
     currentDirection = ar[random(2)];
     currentPosition = servo.read();
+    Serial.print("cp: ");
+    Serial.println(currentPosition);
 }
  
 void Bull::setLeftNeighbor(Bull *lNeighbor){
@@ -40,7 +42,6 @@ void Bull::reverseDirection(){
 }
 
 void Bull::calculateDirection(){
-
    if(distanceToLeftNeighbor() <= turnThreshold){
        reverseDirection();  
        if(hasLeftNeighbor)
@@ -57,6 +58,8 @@ void Bull::calculateDirection(){
 void Bull::move(){
     calculateDirection();
     currentPosition = currentPosition + currentDirection;
+    
+    // deal with < 0 or > 180.
     servo.write(currentPosition);
 }
 
