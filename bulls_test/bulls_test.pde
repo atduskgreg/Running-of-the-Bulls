@@ -9,13 +9,12 @@ Bull bull2;
 void setup(){
   
   randomSeed(analogRead(0));
+    bull1 = Bull(0);
+  bull2 = Bull(1);
 
   bull1.setPosition(random(0, 180));
   bull2.setPosition(random(0, 180));
   //bull3.setPosition(random(0, 180));
-
-  bull1 = Bull(11);
-  bull2 = Bull(10);
   
   bull1.setRightNeighbor(&bull2);
   bull1.noLeftNeighbor();
