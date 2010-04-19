@@ -1,0 +1,30 @@
+Description:
+An electromechanical game based on the running of the bulls in Pamplona, Spain in the style of retro arcade games from the 60s and 70s.
+
+Team:
+Greg Borenstein and Scott Wayne Indiana
+
+Schedule:
+3/25 - order timing belt and pulleys
+4/4 - assemble pulley and timing belt system
+4/5 - purchase rails, order car makings
+4/11 - assemble car and motor attachment, test motor
+4/13 - begin assembly of bull car
+4/15-4/20 - figure out hit detection
+4/15-4/23 - build set
+4/23-4/29 - finish and debug
+
+Budget:
+$39.98  spd-si timing belt and pulleys
+$5.00   rods
+$20.00  wood, screws, etc
+$14.25  timing belt pulley matched for NEMA shaft
+$59.44  car makings from mcmaster (pulleys, rods, shaft collars)
+$42.00  7 micro servos
+$40.00  bull making materials (clay, etc.)
+$50.00  set making materials
+$15.00  Arcade joystick
+$20.00  linkages/hardware/other
+(donated) closed-circuit cameras
+(donated) monitor(s)
+Total: $305.67
