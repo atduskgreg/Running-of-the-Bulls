@@ -12,9 +12,11 @@ void setup(){
     bull1 = Bull(0);
   bull2 = Bull(1);
 
-  bull1.setPosition(random(0, 180));
-  bull2.setPosition(random(0, 180));
+  //bull1.setPosition(random(0, 180));
+  //bull2.setPosition(random(0, 180));
   //bull3.setPosition(random(0, 180));
+  bull1.setPosition(30);
+  bull2.setPosition(120);
   
   bull1.setRightNeighbor(&bull2);
   bull1.noLeftNeighbor();
@@ -35,11 +37,23 @@ void loop(){
   delay(1000);
   bull1.setPosition(0);
   delay(1000);*/
-  
-Serial.print(bull1.getPosition());
 
- Serial.print("\t");
- Serial.println(bull2.getPosition());
+/*Serial.print("dToWall: ");
+Serial.print(bull1.distanceToLeftNeighbor());
+Serial.print(" dToR: ");
+Serial.print(bull1.distanceToRightNeighbor());
+
+
+ Serial.print("\t\t");
+ Serial.print("dToL: ");
+ Serial.print(bull2.distanceToLeftNeighbor());
+ Serial.print(" dToWall: ");
+Serial.println(bull2.distanceToRightNeighbor());
+*/
+Serial.print(bull1.getPosition());
+Serial.print("\t");
+Serial.println(bull2.getPosition());
+
  // Serial.print("\t");
   /* Serial.print(bull3.getPosition());
   Serial.println();*/

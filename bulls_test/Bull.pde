@@ -79,8 +79,7 @@ int Bull::distanceToLeftNeighbor(){
 int Bull::distanceToRightNeighbor(){
     // if no right neightbor, we treat 180 as the wall
     if(!hasRightNeighbor){
-        return (180 - getPosition());
-        Serial.print("no right neighbor");
+      return (180 - getPosition());
     } else {
         return (rightNeighbor->getPosition() + (180 - getPosition()));
        
