@@ -1,6 +1,8 @@
 #include "Bull.h" //include the declaration for this class
 
 int turnThreshold = 30; // should this be setable? so they can be different...
+int leftBorder = 0;
+int rightBorder = 180;
 
 //<<constructor>>
 Bull::Bull(){
@@ -51,9 +53,9 @@ void Bull::calculateDirection(){
        reverseDirection();  
        if(hasRightNeighbor)
          rightNeighbor->reverseDirection();
-   } /* else {
-       currentDirection = 0; // straight
-   } */
+   } //else if()
+    // else if all_the_way_right
+    // else if all_the_way_left
 }
 
 void Bull::move(){
@@ -61,6 +63,11 @@ void Bull::move(){
     currentPosition = currentPosition + currentDirection;
     
     // deal with < 0 or > 180.
+    if(currentPosition > rightBorder){
+      currentPosition = rightBorder;
+    } else if(currentPosition < leftBorder){
+      currentPosition = leftBorder;
+    }
     servo.write(currentPosition);
 }
 
@@ -71,18 +78,18 @@ void Bull::move(){
 int Bull::distanceToLeftNeighbor(){
    // if no left neightbor, we treat 0 as the wall
     if(!hasLeftNeighbor){
-        return getPosition();
+        return getPosition() - leftBorder;
     } else {
-        return ((180 - leftNeighbor->getPosition()) + getPosition());
+        return ((rightBorder - leftNeighbor->getPosition()) + getPosition());
     }
 }
 
 int Bull::distanceToRightNeighbor(){
     // if no right neightbor, we treat 180 as the wall
     if(!hasRightNeighbor){
-      return (180 - getPosition());
+      return (rightBorder - getPosition());
     } else {
-        return (rightNeighbor->getPosition() + (180 - getPosition()));
+        return (rightNeighbor->getPosition() + (rightBorder - getPosition()));
        
     }
 }

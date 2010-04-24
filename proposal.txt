@@ -1,6 +1,24 @@
 Description:
 An electromechanical game based on the running of the bulls in Pamplona, Spain in the style of retro arcade games from the 60s and 70s.
 
+Long Description:
+A player will control a figure on a miniature street set resembling Pamplona, Spain. They'll have to dodge a pack of mechanical bulls as they storm down the city's narrow streets. If they can avoid getting gored as the bulls go by, they'll win the game.
+
+Personal Statement:
+This project evolved out of the Mechanisms and Things That Move class and our mutual obsession for miniatures, toys, and pre-digital games. Scott personally attended the running of the bulls and his description of that experience formed the basis of the project.
+
+Background/Research:
+Over winter break, we visited the Retro Arcade Museum in Beacon, NY which features a collection of pre-digital electromechanical games from the 50s, 60s, and 70s. The proprietor provided us with a behind-the-scene tour, opening up cabinets to show us many of the games' workings. Each game uses a unique combination of relays, gears, switches, half-silver mirrors, black light, etc. to create its game play and atmosphere. The games render a lurid version of the culture of the post-war period: bombing runs, helicopter attacks in the jungle, racing shiny many-finned cars. 
+
+Audience:
+Kids of all ages. It will be played while looking at a screen via a single joystick. We would be extremely interested to hear what other people who've been to (or considered going to the) actual running of the bulls would think of the project.
+
+User Scenario:
+One player will approach the cabinet at the end of the piece containing the joystick and screen. He will start the game and play it, controlling the runner while watching the game on the screen. Meanwhile, other people, some queued up to play next, some simply observing, will watch the actual mechanical movements of the bulls and player avatar on the miniature street scape at table or floor level.
+
+Implementation:
+The linear motion of the bulls is powered by a stepper motor pulling a six foot long timing belt. That belt moves a car made of pulleys and shafts that rides on two tracks built out of 1/2" metal pipe. That motion will pull the bulls towards the player avatar. Simultaneously, the bulls will move side-to-side via servos attached to Scotch Yoke mechanisms and running a simple simulation of the logic of a stampeding bull (if you get too close to a wall or another bull, reverse course). The player will control his avatar via a joystick which will turn a servo to move their avatar from side-to-side to dodge out of the way of the bulls. There will be a small CCTV camera installed behind the player's avatar hooked up to a the screen on which the player watches the game. If any of the bulls collide with the avatar, the plater loses. If all the bulls pass without a collision, the player wins.
+
 Team:
 Greg Borenstein and Scott Wayne Indiana
 

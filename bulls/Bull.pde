@@ -58,7 +58,7 @@ void Bull::calculateDirection(){
 void Bull::move(){
     calculateDirection();
     currentPosition = currentPosition + currentDirection;
-    
+    //delay(25);
     // deal with < 0 or > 180.
     servo.write(currentPosition);
 }

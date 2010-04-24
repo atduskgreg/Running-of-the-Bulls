@@ -22,12 +22,14 @@ public:
         int currentPosition;
         void noLeftNeighbor();
         void noRightNeighbor();
+        boolean hasLeftNeighbor;
+        boolean hasRightNeighbor;
 private:
         Bull *leftNeighbor;
         Bull *rightNeighbor;
         Servo servo;
-        boolean hasLeftNeighbor;
-        boolean hasRightNeighbor;
+       // boolean hasLeftNeighbor;
+        //boolean hasRightNeighbor;
 
 };
  

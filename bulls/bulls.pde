@@ -1,12 +1,16 @@
-#include <Bull.h>
 #include <Stepper.h>
 #define STEPS 200
 #include <Servo.h>
 #include <FiniteStateMachine.h>
+#include "Bull.h"
 
-State attractMode = State(enterAttractMode);
-State playMode = State(enterPlayMode);
+State attractMode = State(enterAttractMode, doAttractMode, doNothing);
+State playMode = State(enterPlayMode, doPlayMode, doNothing);
 FSM game = FSM(attractMode);
+
+
+Bull bull1;
+Bull bull2;
 
 int leftPin = 2;
 int rightPin = 3;
@@ -26,15 +30,28 @@ void setup(){
   digitalWrite(enablePin1, HIGH);
   digitalWrite(enablePin2, HIGH);
   stepper.setSpeed(120);
+  
   servo.attach(servoPin);
   servo.write(90);
+  
+  bull1 = Bull(0);
+  bull2 = Bull(1);
+  bull1.setPosition(30);
+  bull2.setPosition(120);
+  bull1.setRightNeighbor(&bull2);
+  bull1.noLeftNeighbor();
+  bull2.setLeftNeighbor(&bull1);
+  bull2.noRightNeighbor();
+  
   Serial.begin(9600);
 }
 
 void loop(){
-  switch(game.getCurrentState()){
-    case attractMode : doAttractMode(); break;
-    case playMode : doPlayMode(); break;
+  if(game.isInState(attractMode)){
+
+    doAttractMode(); 
+  } else if(game.isInState(playMode)) {
+    doPlayMode();
   }
  
   game.update();
@@ -46,6 +63,7 @@ void moveCarToOrigin(){
 }
 
 void enterAttractMode(){
+  Serial.println("entering Attract Mode");
   moveCarToOrigin();
   game.transitionTo(playMode);
 }
@@ -58,6 +76,7 @@ void doAttractMode(){
 }
 
 void enterPlayMode(){
+  Serial.println("entering Play Mode");
 }
 
 void moveStepperForward(){
@@ -69,6 +88,8 @@ void doPlayMode(){
   if(stepperPosition >= 5300){
     game.transitionTo(attractMode);
   } else {
+    bull1.move();
+    bull2.move();
     moveStepperForward();
     moveServoFromJoystiq();
   }
@@ -86,3 +107,4 @@ void moveServoFromJoystiq(){
   servo.write(servoPosition);
 }
 
+void doNothing(){}
