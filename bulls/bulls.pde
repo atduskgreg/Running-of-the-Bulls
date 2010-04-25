@@ -2,15 +2,15 @@
 #define STEPS 200
 #include <Servo.h>
 #include <FiniteStateMachine.h>
-#include "Bull.h"
 
 State attractMode = State(enterAttractMode, doAttractMode, doNothing);
 State playMode = State(enterPlayMode, doPlayMode, doNothing);
+State evalMode = State(enterEvalMode, doEvalMode, doNothing);
+
 FSM game = FSM(attractMode);
 
-
-Bull bull1;
-Bull bull2;
+int startButton = 6;
+int collisionSwitch = 4;
 
 int leftPin = 2;
 int rightPin = 3;
@@ -24,6 +24,8 @@ int enablePin2 = 7;
 int stepperPosition = 0;
 int stepperDirection = 1;
 
+int gameResult = 0; // 0 => fail, 1 => win
+
 Stepper stepper(STEPS, 11, 10,9,8);
 
 void setup(){
@@ -34,21 +36,11 @@ void setup(){
   servo.attach(servoPin);
   servo.write(90);
   
-  bull1 = Bull(0);
-  bull2 = Bull(1);
-  bull1.setPosition(30);
-  bull2.setPosition(120);
-  bull1.setRightNeighbor(&bull2);
-  bull1.noLeftNeighbor();
-  bull2.setLeftNeighbor(&bull1);
-  bull2.noRightNeighbor();
-  
   Serial.begin(9600);
 }
 
 void loop(){
   if(game.isInState(attractMode)){
-
     doAttractMode(); 
   } else if(game.isInState(playMode)) {
     doPlayMode();
@@ -65,7 +57,6 @@ void moveCarToOrigin(){
 void enterAttractMode(){
   Serial.println("entering Attract Mode");
   moveCarToOrigin();
-  game.transitionTo(playMode);
 }
 
 void doAttractMode(){
@@ -73,6 +64,10 @@ void doAttractMode(){
   delay(500);
   digitalWrite(13,LOW);
   delay(500);
+  if(digitalRead(startButton)){
+    game.transitionTo(playMode);
+  }
+  
 }
 
 void enterPlayMode(){
@@ -85,14 +80,30 @@ void moveStepperForward(){
 }
 
 void doPlayMode(){
+  // check for collision with player
   if(stepperPosition >= 5300){
-    game.transitionTo(attractMode);
+    gameResult = 1;
+    game.transitionTo(evalMode);
+  } else if(digitalRead(collisionSwitch)){
+    gameResult = 0;
+    game.transitionTo(evalMode);
   } else {
-    bull1.move();
-    bull2.move();
     moveStepperForward();
     moveServoFromJoystiq();
   }
+}
+
+void enterEvalMode(){
+  Serial.println("entering Eval Mode");
+}
+
+void doEvalMode(){
+  if(gameResult == 0){
+    Serial.println("FAIL");
+  } else {
+    Serial.println("WIN");
+  }
+  game.transitionTo(attractMode);
 }
 
 void moveServoFromJoystiq(){
