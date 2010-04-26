@@ -1,8 +1,8 @@
 #include "Bull.h" //include the declaration for this class
 
 int turnThreshold = 30; // should this be setable? so they can be different...
-int leftBorder = 0;
-int rightBorder = 180;
+int leftBorder = 30 ;
+int rightBorder = 150;
 
 //<<constructor>>
 Bull::Bull(){

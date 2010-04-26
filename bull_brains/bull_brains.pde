@@ -4,8 +4,10 @@
 Bull bull1;
 Bull bull2;
 Bull bull3;
+Bull bull4;
+Bull bull5;
 
-int resetPin = 5;
+//int resetPin = 5;
 
 // bull1 -- bull2 -- bull3
 // bull4 -- bull5
@@ -16,10 +18,16 @@ void setup(){
   bull1 = Bull(10);
   bull2 = Bull(11);
   bull3 = Bull(9);  
+  bull4 = Bull(6);
+  bull5 = Bull(5);
 
-  bull1.setPosition(random(35, 145));
-  bull2.setPosition(random(35, 145));
-  bull3.setPosition(random(35, 145));
+  bull1.setPosition(random(60, 120));
+  bull2.setPosition(random(60, 120));
+  bull3.setPosition(random(60, 120));
+  bull4.setPosition(random(60, 120));
+  bull5.setPosition(random(60, 120));
+  
+  
   
   bull1.setRightNeighbor(&bull2);
   bull1.noLeftNeighbor();
@@ -28,24 +36,33 @@ void setup(){
   bull2.setRightNeighbor(&bull3);
   
   bull3.setLeftNeighbor(&bull2);
-  bull3.noRightNeighbor();
+  bull3.setRightNeighbor(&bull4);
+  
+  bull4.setLeftNeighbor(&bull3);
+  bull4.setRightNeighbor(&bull5);
+  
+  bull5.setLeftNeighbor(&bull4);
+  bull5.noRightNeighbor();
   
   Serial.begin(9600);
 }
 
 void loop(){
   
-  if(digitalRead(resetPin)){
-    bull1.setPosition(0);
-    bull2.setPosition(0);
-    bull3.setPosition(0);
+/*  if(digitalRead(resetPin)){
+    delay(5000);
+    bull1.setPosition(30);
+    bull2.setPosition(30);
+    bull3.setPosition(30);
     delay(25);
-  } else{     
+  } else{   */  
     bull1.move();
     bull2.move();
     bull3.move();
+    bull4.move();
+    bull5.move();
     delay(8);
-  }
+  //}
  
   
   Serial.print(bull1.getPosition());
