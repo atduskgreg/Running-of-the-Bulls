@@ -9,13 +9,17 @@ Bull bull3;
 // bull1 -- bull2 -- bull3
 void setup(){
  
-    bull1 = Bull(10);
+  randomSeed(analogRead(0));
+  
+  bull1 = Bull(10);
   bull2 = Bull(11);
   bull3 = Bull(9);
 
-  bull1.setPosition(40);
-  bull2.setPosition(120);
-  bull3.setPosition(80);
+  
+
+  bull1.setPosition(random(35, 145));
+  bull2.setPosition(random(35, 145));
+  bull3.setPosition(random(35, 145));
   
   bull1.setRightNeighbor(&bull2);
   bull1.noLeftNeighbor();
@@ -34,7 +38,14 @@ void loop(){
   bull1.move();
   bull2.move();
   bull3.move();
-  delay(15);
+  delay(8);
+  
+  Serial.print(bull1.getPosition());
+  Serial.print("\t");
+  Serial.print(bull2.getPosition());
+  Serial.print("\t");
+  Serial.println(bull3.getPosition());
+
  
 /*
 Serial.print(" [");
