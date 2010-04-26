@@ -42,12 +42,6 @@ void setup(){
 }
 
 void loop(){
- /* if(game.isInState(attractMode)){
-    doAttractMode(); 
-  } else if(game.isInState(playMode)) {
-    doPlayMode();
-  }*/
- 
   game.update();
 }
 
