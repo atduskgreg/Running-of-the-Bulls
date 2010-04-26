@@ -36,15 +36,17 @@ void setup(){
   servo.attach(servoPin);
   servo.write(90);
   
+  pinMode(INPUT, startButton);
+  
   Serial.begin(9600);
 }
 
 void loop(){
-  if(game.isInState(attractMode)){
+ /* if(game.isInState(attractMode)){
     doAttractMode(); 
   } else if(game.isInState(playMode)) {
     doPlayMode();
-  }
+  }*/
  
   game.update();
 }
@@ -55,19 +57,16 @@ void moveCarToOrigin(){
 }
 
 void enterAttractMode(){
-  Serial.println("entering Attract Mode");
+  Serial.println("rewinding car");
   moveCarToOrigin();
+ Serial.println("entering Attract Mode");
+  
 }
 
 void doAttractMode(){
-  digitalWrite(13, HIGH);
-  delay(500);
-  digitalWrite(13,LOW);
-  delay(500);
   if(digitalRead(startButton)){
     game.transitionTo(playMode);
   }
-  
 }
 
 void enterPlayMode(){
@@ -95,6 +94,7 @@ void doPlayMode(){
 
 void enterEvalMode(){
   Serial.println("entering Eval Mode");
+  
 }
 
 void doEvalMode(){
