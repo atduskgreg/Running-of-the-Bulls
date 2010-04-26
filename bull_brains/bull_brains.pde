@@ -4,18 +4,18 @@
 Bull bull1;
 Bull bull2;
 Bull bull3;
-//Bull bull3 = Bull(11);
+
+int resetPin = 5;
 
 // bull1 -- bull2 -- bull3
+// bull4 -- bull5
 void setup(){
  
   randomSeed(analogRead(0));
   
   bull1 = Bull(10);
   bull2 = Bull(11);
-  bull3 = Bull(9);
-
-  
+  bull3 = Bull(9);  
 
   bull1.setPosition(random(35, 145));
   bull2.setPosition(random(35, 145));
@@ -34,18 +34,26 @@ void setup(){
 }
 
 void loop(){
-
-  bull1.move();
-  bull2.move();
-  bull3.move();
-  delay(8);
+  
+  if(digitalRead(resetPin)){
+    bull1.setPosition(0);
+    bull2.setPosition(0);
+    bull3.setPosition(0);
+    delay(25);
+  } else{     
+    bull1.move();
+    bull2.move();
+    bull3.move();
+    delay(8);
+  }
+ 
   
   Serial.print(bull1.getPosition());
   Serial.print("\t");
   Serial.print(bull2.getPosition());
   Serial.print("\t");
   Serial.println(bull3.getPosition());
-
+  
  
 /*
 Serial.print(" [");
