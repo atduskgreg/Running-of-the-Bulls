@@ -12,12 +12,14 @@ FSM game = FSM(attractMode);
 int startButton = 6;
 int collisionSwitch = 4;
 
-int leftPin = 2;
-int rightPin = 3;
+int leftPin = 3;
+int rightPin = 2;
 
 int servoPin = 5;
 Servo servo;
 int servoPosition = 90;
+int leftServoLimit = 30;
+int rightServoLimit = 150;
 
 int enablePin1 = 12;
 int enablePin2 = 7;
@@ -37,6 +39,7 @@ void setup(){
   servo.write(90);
   
   pinMode(INPUT, startButton);
+
   
   Serial.begin(9600);
 }
@@ -51,8 +54,10 @@ void moveCarToOrigin(){
 }
 
 void enterAttractMode(){
-  Serial.println("rewinding car");
-  moveCarToOrigin();
+ servo.write(15);
+ Serial.println("rewinding car");
+ moveCarToOrigin();
+ servo.write(90);
  Serial.println("entering Attract Mode");
   
 }
@@ -101,11 +106,11 @@ void doEvalMode(){
 }
 
 void moveServoFromJoystiq(){
-  if(digitalRead(leftPin) == 1 && (servoPosition >= 0)){
+  if(digitalRead(leftPin) == 1 && (servoPosition >= leftServoLimit)){
     servoPosition = servoPosition - 1;
   } 
 
-  if(digitalRead(rightPin) == 1 && (servoPosition <= 180)){
+  if(digitalRead(rightPin) == 1 && (servoPosition <= rightServoLimit)){
     servoPosition = servoPosition + 1;
   }
 
