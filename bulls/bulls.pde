@@ -17,9 +17,10 @@ int rightPin = 2;
 
 int servoPin = 5;
 Servo servo;
-int servoPosition = 90;
-int leftServoLimit = 30;
-int rightServoLimit = 150;
+int servoPosition = 70;
+int leftServoLimit = 40;
+int rightServoLimit = 100;
+int countsSinceServoMove = 0;
 
 int enablePin1 = 12;
 int enablePin2 = 7;
@@ -36,7 +37,7 @@ void setup(){
   stepper.setSpeed(120);
   
   servo.attach(servoPin);
-  servo.write(90);
+  servo.write(70);
   
   pinMode(INPUT, startButton);
 
@@ -54,10 +55,10 @@ void moveCarToOrigin(){
 }
 
 void enterAttractMode(){
- servo.write(15);
+ servo.write(160);
  Serial.println("rewinding car");
  moveCarToOrigin();
- servo.write(90);
+ servo.write(70);
  Serial.println("entering Attract Mode");
   
 }
@@ -106,15 +107,21 @@ void doEvalMode(){
 }
 
 void moveServoFromJoystiq(){
-  if(digitalRead(leftPin) == 1 && (servoPosition >= leftServoLimit)){
-    servoPosition = servoPosition - 1;
-  } 
+  if(countsSinceServoMove == 4){
+  
+    if(digitalRead(leftPin) == 1 && (servoPosition >= leftServoLimit)){
+      servoPosition = servoPosition - 1;
+    } 
 
-  if(digitalRead(rightPin) == 1 && (servoPosition <= rightServoLimit)){
-    servoPosition = servoPosition + 1;
+    if(digitalRead(rightPin) == 1 && (servoPosition <= rightServoLimit)){
+      servoPosition = servoPosition + 1;
+    }
+
+    servo.write(servoPosition);
+    countsSinceServoMove = 0;
+  } else {
+    countsSinceServoMove = countsSinceServoMove + 1;
   }
-
-  servo.write(servoPosition);
 }
 
 void doNothing(){}
