@@ -9,6 +9,9 @@ State evalMode = State(enterEvalMode, doEvalMode, doNothing);
 
 FSM game = FSM(attractMode);
 
+int winLight = 1;
+int failLight = 13;
+
 int startButton = 6;
 int collisionSwitch = 4;
 
@@ -94,15 +97,23 @@ void doPlayMode(){
 
 void enterEvalMode(){
   Serial.println("entering Eval Mode");
-  
+
 }
 
 void doEvalMode(){
   if(gameResult == 0){
     Serial.println("FAIL");
+    // digitalWrite(failLight, HIGH);
+    delay(3000);
+    // digitalWrite(failLight, LOW);
   } else {
     Serial.println("WIN");
+    // digitalWrite(winLight, HIGH);
+    delay(3000);
+    // digitalWrite(winLight, LOW);
   }
+  
+
   game.transitionTo(attractMode);
 }
 
