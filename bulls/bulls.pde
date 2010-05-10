@@ -43,9 +43,10 @@ void setup(){
   servo.write(70);
   
   pinMode(INPUT, startButton);
-
+  pinMode(winLight, OUTPUT);
+  pinMode(failLight, OUTPUT);
   
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 void loop(){
@@ -59,10 +60,11 @@ void moveCarToOrigin(){
 
 void enterAttractMode(){
  servo.write(160);
- Serial.println("rewinding car");
+ //Serial.println("rewinding car");
  moveCarToOrigin();
+ turnOffServos();
  servo.write(70);
- Serial.println("entering Attract Mode");
+ //Serial.println("entering Attract Mode");
   
 }
 
@@ -73,7 +75,7 @@ void doAttractMode(){
 }
 
 void enterPlayMode(){
-  Serial.println("entering Play Mode");
+  //Serial.println("entering Play Mode");
 }
 
 void moveStepperForward(){
@@ -96,24 +98,31 @@ void doPlayMode(){
 }
 
 void enterEvalMode(){
-  Serial.println("entering Eval Mode");
+  //Serial.println("entering Eval Mode");
+}
 
+void backOffBulls(){
+  stepper.step(-300);
+  stepperPosition = stepperPosition - 300;
 }
 
 void doEvalMode(){
   if(gameResult == 0){
-    Serial.println("FAIL");
-    // digitalWrite(failLight, HIGH);
-    delay(3000);
-    // digitalWrite(failLight, LOW);
+    //Serial.println("FAIL");
+    digitalWrite(failLight, HIGH);
+    backOffBulls();
+    turnOffServos();
+    delay(5000);
+    digitalWrite(failLight, LOW);
   } else {
-    Serial.println("WIN");
-    // digitalWrite(winLight, HIGH);
-    delay(3000);
-    // digitalWrite(winLight, LOW);
+   // Serial.println("WIN");
+    digitalWrite(winLight, HIGH);
+    turnOffServos();
+    delay(5000);
+    digitalWrite(winLight, LOW);
   }
   
-
+  delay(1000);
   game.transitionTo(attractMode);
 }
 
@@ -133,6 +142,14 @@ void moveServoFromJoystiq(){
   } else {
     countsSinceServoMove = countsSinceServoMove + 1;
   }
+}
+
+void turnOffServos(){
+  digitalWrite(11, LOW);
+  digitalWrite(10, LOW);
+  digitalWrite(9, LOW);
+  digitalWrite(8, LOW);
+
 }
 
 void doNothing(){}
